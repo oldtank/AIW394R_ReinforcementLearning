@@ -77,4 +77,5 @@ class BanditEnvironment(gym.Env):
         noise ~ N(0, 0.01)
         """
         noise = np.random.normal(loc=0, scale = 0.01, size = self.Q_star.size)
+
         self.Q_star = self.Q_star + noise

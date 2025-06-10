@@ -178,7 +178,8 @@ class BanditSolver(Solver):
             ###     Hint: make sure to destructure the step method's return values (next_state, r, done, truncated, info)
             ### 3. Update the Q value using the appropriate method
             action = self.policy.action()
-            _, r, _, _, info = self.env.step(action)
+            _, r, done, truncated, info = self.env.step(action)
+            self.method.update(action, r)
             rs.append(r)
             best_action_taken.append(info["ideal_action"])
 
