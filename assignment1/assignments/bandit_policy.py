@@ -1,4 +1,5 @@
 import numpy as np
+import random
 from typing import override
 
 from interfaces.policy import Policy
@@ -16,6 +17,7 @@ class BanditPolicy(Policy):
             epsilon (float): The probability of selecting a random action.
         """
         self.epsilon = epsilon
+        self.N = Q.size
         self.Q = Q
 
     @override
@@ -30,7 +32,11 @@ class BanditPolicy(Policy):
         ### 1. Implement the epsilon-greedy policy for selecting an action.
         ###    With probability epsilon, select a random action.
         ###    Otherwise, select any action with the highest estimated Q value.
-        raise NotImplementedError
+
+        sample= np.random.random()
+        if sample < self.epsilon:
+            return np.random.choice(self.N)
+        return self.Q.argmax()
 
     @override
     def action_prob(self, _: int = None, action: int = None) -> float:
