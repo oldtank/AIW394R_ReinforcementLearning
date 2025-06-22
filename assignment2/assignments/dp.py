@@ -47,7 +47,22 @@ def value_prediction(
     Q = np.zeros((states, actions))
     """The Q(s, a) function to estimate"""
 
-    print(f"states: {states}")
+    while True:
+        delta = 0
+        for s in range(states):
+            v = V[s]
+            new_v = 0
+            for a in range(actions):
+                action_prob = pi.action_prob(s, a)
+                transitions = env.P[s][a]
+                action_value = 0
+                for transition in transitions:
+                    action_value = action_value + transition[0]* (transition[2] + gamma * transition[1])
+                new_v = new_v + action_prob * action_value
+            V[s] = new_v
+            delta = max(delta, abs(v - V[s]))
+            if delta < theta:
+                break
 
     return V, Q
 
