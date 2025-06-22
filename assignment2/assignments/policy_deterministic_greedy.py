@@ -24,8 +24,8 @@ class Policy_DeterministicGreedy(Policy):
             - int: index of the action to take
         """
 
-        ### TODO: Implement the action method ###
-        raise NotImplementedError
+        qs = self.Q[state]
+        return np.argmax(qs)
 
 
     @override
@@ -43,5 +43,7 @@ class Policy_DeterministicGreedy(Policy):
             - float: the probability of taking the action in the given state
         """
 
-        ### TODO: Implement the action_prob method ###
-        raise NotImplementedError
+        best_action_index = self.action(state)
+        if best_action_index == action:
+            return 1.0
+        return 0.0
