@@ -61,8 +61,8 @@ def value_prediction(
                 new_v = new_v + action_prob * action_value
             V[s] = new_v
             delta = max(delta, abs(v - V[s]))
-            if delta < theta:
-                break
+        if delta < theta:
+            break
 
     return V, Q
 
