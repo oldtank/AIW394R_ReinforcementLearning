@@ -47,6 +47,8 @@ def value_prediction(
     Q = np.zeros((states, actions))
     """The Q(s, a) function to estimate"""
 
+    print(f"states: {states}")
+
     return V, Q
 
 def value_iteration(env: gym.Env, initV: np.ndarray, theta: float, gamma: float) -> Tuple[np.array, Policy]:
