@@ -59,6 +59,7 @@ def value_prediction(
                 for transition in transitions:
                     action_value = action_value + transition[0]* (transition[2] + gamma * V[transition[1]])
                 new_v = new_v + action_prob * action_value
+                Q[s][a] = action_value
             V[s] = new_v
             delta = max(delta, abs(v - V[s]))
         if delta < theta:
