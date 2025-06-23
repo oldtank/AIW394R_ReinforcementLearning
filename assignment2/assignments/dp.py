@@ -100,4 +100,23 @@ def value_iteration(env: gym.Env, initV: np.ndarray, theta: float, gamma: float)
     P: np.ndarray = env.P
     """Transition Dynamics;  env.P[state][action] returns a list of tuples [(prob, next_state, reward, done)]"""
 
+    while True:
+        delta = 0
+        for s in range(nS):
+            v = V[s]
+            max_new_v = -999999.0
+            best_action = -1
+            for a in range(nA):
+                action_value = 0
+                for transition in env.P[s][a]:
+                    action_value = action_value + transition[0]* (transition[2] + gamma * V[transition[1]])
+                Q[s][a] = action_value
+                if max_new_v < action_value:
+                    max_new_v = action_value
+                    best_action = a
+            V[s] = max_new_v
+            delta = max(delta, abs(v-V[s]))
+        if delta < theta:
+            break
+
     return V, Policy_DeterministicGreedy(Q)
